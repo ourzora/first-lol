@@ -1,0 +1,21 @@
+:root {
+    --background-color: #EEEEEE;
+    --sponsor-color: #333333;
+    --text-color: #000;
+    --container-color: #FFF;
+    --secondary-text-color: #BBB;
+    --background-text-color: #555;
+    --button-color: #9EFF00;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: var(--font-inter), sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}

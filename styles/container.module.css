@@ -1,0 +1,39 @@
+.gutter {
+    width: 50rem;
+    height: 100vh;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    background-color: var(--container-color);
+    width: 50rem;
+    height: 31.25rem;
+    border-radius: 0.4375rem;
+}
+
+.header {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.header>span {
+    font-size: 24px;
+}
+
+.sponsorHeader {
+    color: var(--background-text-color);
+    font-family: var(--font-mono);
+    margin-top: 3.75rem;
+}
+
+.sponsorRow {
+    display: flex;
+    justify-content: space-between;
+    height: 2.8125rem;
+    margin-top: 10px;
+    width: 100%;
+}

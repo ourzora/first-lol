@@ -12,3 +12,7 @@ docs/
 
 # Dotenv file
 .env
+
+yarn-error.log
+.next
+node_modules

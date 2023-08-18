@@ -1,0 +1,23 @@
+{
+  "name": "first.lol",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "tbtstl <tysonbattistella@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "^13.4.17",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "20.5.0",
+    "@types/react": "18.2.20",
+    "typescript": "5.1.6"
+  }
+}
