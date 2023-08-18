@@ -1,7 +1,7 @@
 import styles from '../styles/form.module.css'
 
-export function Input({ placeholder }) {
+export function Input({ field, ...props }) {
     return (
-        <input className={styles.input} placeholder={placeholder} />
+        <input className={styles.input} {...field} {...props} />
     )
 }

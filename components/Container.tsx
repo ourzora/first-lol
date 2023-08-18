@@ -1,8 +1,21 @@
+import { Field, Formik } from "formik"
+import * as Yup from 'yup';
 import containerStyles from "../styles/container.module.css"
 import { Button } from "./Button"
 import { Input } from "./Input"
+import { useCallback } from "react"
+
+const FormSchema = Yup.object().shape({
+    gasPrice: Yup.number().moreThan(0).required()
+})
+
 
 export function Container({ children }) {
+    const handleSubmit = useCallback((values, { setSubmitting }) => {
+        console.log({ values })
+        setSubmitting(false)
+    }, [])
+
     return (
         <div className={containerStyles.gutter}>
             <div className={containerStyles.header}>
@@ -16,10 +29,23 @@ export function Container({ children }) {
                 <div className={containerStyles.containerContent}>
                     {children}
                 </div>
-                <div className={containerStyles.containerFooter}>
-                    <div><Input placeholder="ENTER GAS PRICE..." /></div>
-                    <div><Button>CLAIM BLOCK</Button></div>
-                </div>
+                <Formik
+                    initialValues={{ gasPrice: undefined }}
+                    validationSchema={FormSchema}
+                    onSubmit={handleSubmit}
+                >
+                    {({
+                        errors,
+                        handleChange,
+                        handleSubmit,
+                        isSubmitting,
+                    }) => (
+                        <form className={containerStyles.containerFooter} onSubmit={handleSubmit}>
+                            <div><Field type="input" name="gasPrice" placeholder="ENTER GAS PRICE..." component={Input} /></div>
+                            <div><Button disabled={errors.gasPrice || isSubmitting}>CLAIM BLOCK</Button></div>
+                        </form>
+                    )}
+                </Formik>
             </div>
             <div style={{ marginTop: '0.5rem' }}>CLAIM A BLOCK FIRST, SCORE A POINT. CLAIM THE MOST BLOCKS, WIN ETH.</div>
             <div className={containerStyles.sponsorHeader}>POWERED BY</div>
