@@ -13,6 +13,33 @@
     width: 50rem;
     height: 31.25rem;
     border-radius: 0.4375rem;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+}
+
+.containerHeader {
+    display: flex;
+    padding: var(--container-y-padding) var(--container-x-padding);
+    border-bottom: 1px solid var(--background-color);
+    justify-content: space-between;
+    color: var(--secondary-text-color);
+    flex-grow: 0;
+}
+
+.containerContent {
+    padding: var(--container-y-padding) var(--container-x-padding);
+    flex: 1;
+}
+
+.containerFooter {
+    display: flex;
+    padding: var(--container-y-padding) var(--container-x-padding);
+    border-top: 1px solid var(--background-color);
+    justify-content: space-between;
+    color: var(--secondary-text-color);
+    flex-grow: 0;
 }
 
 .header {

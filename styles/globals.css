@@ -6,6 +6,8 @@
     --secondary-text-color: #BBB;
     --background-text-color: #555;
     --button-color: #9EFF00;
+    --container-x-padding: 30px;
+    --container-y-padding: 20px;
 }
 
 html,
