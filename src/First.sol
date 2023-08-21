@@ -1,13 +1,14 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
-contract Race {
+contract First {
     mapping(uint256 => bool) public blockClaimed;
     mapping(address => uint256) public claims;
     uint256 public immutable gameOverDeadline;
     uint256 public highScore;
 
     event Claimed(address indexed claimer, uint256 claims);
+    event FundsReceived(address indexed sender, uint256 amount);
 
     constructor() payable {
         gameOverDeadline = block.timestamp + 60 days;
@@ -33,5 +34,9 @@ contract Race {
         require(claims[msg.sender] == highScore, "Not highest score");
 
         payable(msg.sender).transfer(address(this).balance);
+    }
+
+    receive() external payable {
+        emit FundsReceived(msg.sender, msg.value);
     }
 }

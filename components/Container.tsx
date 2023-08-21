@@ -47,7 +47,7 @@ export function Container({ children }) {
                     )}
                 </Formik>
             </div>
-            <div style={{ marginTop: '0.5rem' }}>CLAIM A BLOCK FIRST, SCORE A POINT. CLAIM THE MOST BLOCKS, WIN ETH.</div>
+            <div style={{ marginTop: '1rem' }}>CLAIM A BLOCK FIRST, SCORE A POINT. CLAIM THE MOST BLOCKS, WIN ETH.</div>
             <div className={containerStyles.sponsorHeader}>POWERED BY</div>
             <div className={containerStyles.sponsorRow}>
                 <div><img src="/img/paradigm.svg" alt="Paradigm Logo" /></div>
