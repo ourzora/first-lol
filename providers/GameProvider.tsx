@@ -1,8 +1,8 @@
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
-import { useBlockNumber, useContractEvent } from "wagmi";
-import { fetchTransaction } from '@wagmi/core'
+import { useBlockNumber, useContractEvent, useContractRead } from "wagmi";
+import { fetchTransaction, readContract } from '@wagmi/core'
 import abi from "../utils/abi"
-import { formatEther, formatUnits } from "viem";
+import { formatUnits } from "viem";
 
 
 export interface ClaimableBlock {
@@ -14,11 +14,12 @@ export interface ClaimableBlock {
 
 export interface GameState {
     blocks: { [id: string]: ClaimableBlock };
-
+    highScore: bigint;
+    userScore: bigint;
     claimBlock: () => Promise<void>;
 }
 
-const initialState = { blocks: {}, claimBlock: async () => { } };
+const initialState = { blocks: {}, userScore: BigInt(0), highScore: BigInt(0), claimBlock: async () => { } };
 export const GameContext = createContext<GameState>(initialState);
 
 const USE_MAINNET = process.env.NEXT_PUBLIC_USE_MAINNET === 'true';
@@ -30,6 +31,12 @@ export const GameProvider = ({ children }) => {
     const { data: blockNumber } = useBlockNumber({
         watch: true,
     })
+    const { data: initialHighScore } = useContractRead({
+        address: CONTRACT_ADDRESS,
+        abi,
+        functionName: 'highScore'
+    });
+    const [highScore, setHighScore] = useState(initialHighScore || BigInt(0));
 
     // Append new blocks to the blocks array
     useEffect(() => {
@@ -54,6 +61,14 @@ export const GameProvider = ({ children }) => {
                 const { gasPrice } = await fetchTransaction({ hash: transactionHash });
                 const gasPriceGwei = formatUnits(gasPrice, 9);
 
+                // Since we know the score has changed, let's refresh the highscore.
+                const data = await readContract({
+                    address: CONTRACT_ADDRESS,
+                    abi,
+                    functionName: 'highScore'
+                });
+                setHighScore(data);
+
                 // Set the last claimed block to exit out of this async code and back into context-aware block territory
                 setLastClaimedBlock({ claimed: true, id: parseInt(blockNumber.toString()), claimerAddress: args.claimer, gasPriceGwei });
             }))
@@ -74,7 +89,7 @@ export const GameProvider = ({ children }) => {
     }, [])
 
     return (
-        <GameContext.Provider value={{ blocks, claimBlock }}>
+        <GameContext.Provider value={{ blocks, claimBlock, highScore, userScore: BigInt(0) }}>
             {children}
         </GameContext.Provider>
     )

@@ -4,6 +4,7 @@ import containerStyles from "../styles/container.module.css"
 import { Button } from "./Button"
 import { Input } from "./Input"
 import { useCallback } from "react"
+import { useGameState } from "../providers/GameProvider";
 
 const FormSchema = Yup.object().shape({
     gasPrice: Yup.number().moreThan(0).required()
@@ -11,6 +12,7 @@ const FormSchema = Yup.object().shape({
 
 
 export function Container({ children }) {
+    const { highScore, userScore } = useGameState();
     const handleSubmit = useCallback((values, { setSubmitting }) => {
         console.log({ values })
         setSubmitting(false)
@@ -23,8 +25,8 @@ export function Container({ children }) {
             </div>
             <div className={containerStyles.container}>
                 <div className={containerStyles.containerHeader}>
-                    <div>High Score: 1080 Blocks</div>
-                    <div>Your Score: 50 Blocks</div>
+                    <div>High Score: {highScore.toString()} Blocks</div>
+                    <div>Your Score: {userScore.toString()} Blocks</div>
                 </div>
                 <div className={containerStyles.containerContent}>
                     {children}
