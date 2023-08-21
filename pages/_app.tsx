@@ -28,6 +28,7 @@ const { chains, publicClient, webSocketPublicClient } = configureChains(
 const { connectors } = getDefaultWallets({
   appName: 'first.lol',
   projectId: process.env.NEXT_PUBLIC_WC_PROJECT_ID,
+  // @ts-ignore
   chains: chains.map(chain => ({ ...chain, fees: { ...chain.fees ?? {}, defaultPriorityFee: parseInt(chain.fees?.defaultPriorityFee.toString()) } }))
 });
 

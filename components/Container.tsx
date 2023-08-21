@@ -77,9 +77,9 @@ export function Container({ children }) {
             <div style={{ marginTop: '1rem' }}>CLAIM A BLOCK FIRST, SCORE A POINT. CLAIM THE MOST BLOCKS, WIN ETH.</div>
             <div className={containerStyles.sponsorHeader}>POWERED BY</div>
             <div className={containerStyles.sponsorRow}>
-                <div><img src="/img/paradigm.svg" alt="Paradigm Logo" /></div>
-                <div><img src="/img/zora.svg" alt="Zora Logo" /></div>
-                <div><img src="/img/conduit.svg" alt="Conduit Logo" /></div>
+                <div><img className={containerStyles.sponsorImg} src="/img/paradigm.svg" alt="Paradigm Logo" /></div>
+                <div><img className={containerStyles.sponsorImg} src="/img/zora.svg" alt="Zora Logo" /></div>
+                <div><img className={containerStyles.sponsorImg} src="/img/conduit.svg" alt="Conduit Logo" /></div>
             </div>
         </div >
     )

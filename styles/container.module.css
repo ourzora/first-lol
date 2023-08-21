@@ -11,7 +11,7 @@
 .container {
     background-color: var(--container-color);
     width: 50rem;
-    height: 31.25rem;
+    height: 37.25rem;
     border-radius: 0.4375rem;
     font-family: var(--font-mono);
     font-size: 14px;
@@ -61,11 +61,13 @@
 .sponsorRow {
     display: flex;
     justify-content: space-between;
-    height: 2.8125rem;
+    height: 1.5rem;
     margin-top: 10px;
     width: 100%;
 }
 
-@media only screen and (max-width: 600px) {
-    
+.sponsorImg {
+    height: 100%;
 }
+
+@media only screen and (max-width: 600px) {}
