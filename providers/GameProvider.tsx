@@ -16,14 +16,13 @@ export interface GameState {
     blocks: { [id: string]: ClaimableBlock };
     highScore: bigint;
     userScore: bigint;
-    claimBlock: () => Promise<void>;
 }
 
-const initialState = { blocks: {}, userScore: BigInt(0), highScore: BigInt(0), claimBlock: async () => { } };
+const initialState = { blocks: {}, userScore: BigInt(0), highScore: BigInt(0) };
 export const GameContext = createContext<GameState>(initialState);
 
 const USE_MAINNET = process.env.NEXT_PUBLIC_USE_MAINNET === 'true';
-const CONTRACT_ADDRESS = USE_MAINNET ? '0x' : '0x583816E2F6DA673E97c248d8667F558C1c90Ea88';
+export const CONTRACT_ADDRESS = USE_MAINNET ? '0x' : '0x583816E2F6DA673E97c248d8667F558C1c90Ea88';
 
 export const GameProvider = ({ children }) => {
     const [blocks, setBlocks] = useState<{ [id: string]: ClaimableBlock }>({});
@@ -99,12 +98,8 @@ export const GameProvider = ({ children }) => {
 
     }, [blocks, lastClaimedBlock]);
 
-
-    const claimBlock = useCallback(async () => {
-    }, [])
-
     return (
-        <GameContext.Provider value={{ blocks, claimBlock, highScore, userScore }}>
+        <GameContext.Provider value={{ blocks, highScore, userScore }}>
             {children}
         </GameContext.Provider>
     )

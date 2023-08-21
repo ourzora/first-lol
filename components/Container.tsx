@@ -4,12 +4,13 @@ import containerStyles from "../styles/container.module.css"
 import { Button } from "./Button"
 import { Input } from "./Input"
 import { useCallback } from "react"
-import { useGameState } from "../providers/GameProvider";
-import { useAccount } from "wagmi";
+import { CONTRACT_ADDRESS, useGameState } from "../providers/GameProvider";
+import { useAccount, useContractWrite } from "wagmi";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
+import abi from "../utils/abi";
 
 const FormSchema = Yup.object().shape({
-    gasPrice: Yup.number().moreThan(0).required()
+    gasPrice: Yup.number().moreThan(0)
 })
 
 
@@ -17,8 +18,17 @@ export function Container({ children }) {
     const { highScore, userScore } = useGameState();
     const { openConnectModal } = useConnectModal();
     const { address } = useAccount();
-    const handleSubmit = useCallback((values, { setSubmitting }) => {
+    const { write } = useContractWrite({
+        address: CONTRACT_ADDRESS,
+        abi,
+        functionName: 'claimBlock'
+    })
+
+    const handleSubmit = useCallback(async (values, { setSubmitting }) => {
         console.log({ values })
+        await write({
+            gasPrice: values.gasPrice ? values.gasPrice * 1e9 : undefined
+        })
         setSubmitting(false)
     }, [])
 
@@ -50,7 +60,7 @@ export function Container({ children }) {
                             <div><Field type="input" name="gasPrice" placeholder="ENTER GAS PRICE..." component={Input} /></div>
                             <div>
                                 {address ? (
-                                    <Button disabled={errors.gasPrice || isSubmitting}>CLAIM BLOCK</Button>
+                                    <Button disabled={errors.gasPrice || isSubmitting} onClick={handleSubmit}>CLAIM BLOCK</Button>
                                 ) : (
                                     <Button disabled={false} onClick={openConnectModal}>CONNECT</Button>
                                 )}
