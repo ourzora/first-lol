@@ -19,13 +19,16 @@ export function Container({ children }) {
     const { openConnectModal } = useConnectModal();
     const { address } = useAccount();
     const { write } = useContractWrite({
+        // @ts-ignore
         address: CONTRACT_ADDRESS,
+        // @ts-ignore
         abi,
+        // @ts-ignore
         functionName: 'claimBlock'
     })
 
     const handleSubmit = useCallback(async (values, { setSubmitting }) => {
-        console.log({ values })
+        // @ts-ignore
         await write({
             gasPrice: values.gasPrice ? values.gasPrice * 1e9 : undefined
         })
