@@ -20,7 +20,8 @@ export default function Home() {
 }
 
 function BlockLine({ block }: { block: ClaimableBlock }) {
-    const { data: ensName } = useEnsName({ address: block.claimerAddress })
+    const { data: ensName } = useEnsName({ address: block.claimerAddress, chainId: 1 })
+
     if (!block.claimed) {
         return <p><b>Block {block.id}</b> was unclaimed!</p>
     }

@@ -4,7 +4,7 @@ import containerStyles from "../styles/container.module.css"
 import { Button } from "./Button"
 import { Input } from "./Input"
 import { useCallback } from "react"
-import { CONTRACT_ADDRESS, useGameState } from "../providers/GameProvider";
+import { CONTRACT_ADDRESS, CHAIN_ID, useGameState } from "../providers/GameProvider";
 import { useAccount, useContractWrite } from "wagmi";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import abi from "../utils/abi";
@@ -24,7 +24,9 @@ export function Container({ children }) {
         // @ts-ignore
         abi,
         // @ts-ignore
-        functionName: 'claimBlock'
+        functionName: 'claimBlock',
+        // @ts-ignore
+        chainId: CHAIN_ID,
     })
 
     const handleSubmit = useCallback(async (values, { setSubmitting }) => {

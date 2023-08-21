@@ -23,6 +23,7 @@ export const GameContext = createContext<GameState>(initialState);
 
 const USE_MAINNET = process.env.NEXT_PUBLIC_USE_MAINNET === 'true';
 export const CONTRACT_ADDRESS = USE_MAINNET ? '0x' : '0x583816E2F6DA673E97c248d8667F558C1c90Ea88';
+export const CHAIN_ID = USE_MAINNET ? 7777777 : 999;
 
 console.log({ USE_MAINNET, CONTRACT_ADDRESS })
 
@@ -36,12 +37,14 @@ export const GameProvider = ({ children }) => {
     const { data: initialHighScore } = useContractRead({
         address: CONTRACT_ADDRESS,
         abi,
-        functionName: 'highScore'
+        functionName: 'highScore',
+        chainId: CHAIN_ID,
     });
     const { data: initialUserScore } = useContractRead({
         address: CONTRACT_ADDRESS,
         abi,
         functionName: 'claims',
+        chainId: CHAIN_ID,
         args: [address]
     });
     const [highScore, setHighScore] = useState(initialHighScore || BigInt(0));
@@ -63,6 +66,7 @@ export const GameProvider = ({ children }) => {
         address: CONTRACT_ADDRESS,
         abi,
         eventName: 'Claimed',
+        chainId: CHAIN_ID,
         async listener(logs) {
             await Promise.all(logs.map(async (log) => {
                 const { blockNumber, args, transactionHash } = log;
@@ -74,7 +78,7 @@ export const GameProvider = ({ children }) => {
                 const fetchedHighScore = await readContract({
                     address: CONTRACT_ADDRESS,
                     abi,
-                    functionName: 'highScore'
+                    functionName: 'highScore', chainId: CHAIN_ID,
                 });
                 setHighScore(fetchedHighScore);
                 if (address) {
@@ -82,7 +86,7 @@ export const GameProvider = ({ children }) => {
                         address: CONTRACT_ADDRESS,
                         abi,
                         functionName: 'claims',
-                        args: [address]
+                        args: [address], chainId: CHAIN_ID,
                     })
                     setUserScore(fetchedUserScore);
                 }

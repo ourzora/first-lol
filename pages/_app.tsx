@@ -4,8 +4,8 @@ import localFont from 'next/font/local'
 import "../styles/globals.css";
 import '@rainbow-me/rainbowkit/styles.css';
 import { GameProvider } from '../providers/GameProvider';
-import { WagmiConfig, configureChains, createConfig } from 'wagmi';
-import { zoraTestnet } from 'viem/chains';
+import { WagmiConfig, configureChains, createConfig, mainnet } from 'wagmi';
+import { zora, zoraTestnet } from 'viem/chains';
 import { publicProvider } from 'wagmi/providers/public'
 import {
   getDefaultWallets,
@@ -21,14 +21,14 @@ const arialMono = localFont({
 })
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
-  [zoraTestnet],
+  [zoraTestnet, mainnet, zora],
   [publicProvider()],
 )
 
 const { connectors } = getDefaultWallets({
   appName: 'first.lol',
   projectId: process.env.NEXT_PUBLIC_WC_PROJECT_ID,
-  chains: chains.map(chain => ({ ...chain, fees: { ...chain.fees, defaultPriorityFee: parseInt(chain.fees?.defaultPriorityFee.toString()) } }))
+  chains: chains.map(chain => ({ ...chain, fees: { ...chain.fees ?? {}, defaultPriorityFee: parseInt(chain.fees?.defaultPriorityFee.toString()) } }))
 });
 
 const config = createConfig({
