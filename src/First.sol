@@ -8,6 +8,7 @@ contract First {
     uint256 public highScore;
 
     event Claimed(address indexed claimer, uint256 claims);
+    event NewHighScore(address indexed claimer, uint256 newHighScore);
     event FundsReceived(address indexed sender, uint256 amount);
 
     constructor() payable {
@@ -26,6 +27,8 @@ contract First {
 
         if (claims[msg.sender] > highScore) {
             highScore = claims[msg.sender];
+
+            emit NewHighScore(msg.sender, highScore);
         }
     }
 
