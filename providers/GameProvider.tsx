@@ -24,6 +24,8 @@ export const GameContext = createContext<GameState>(initialState);
 const USE_MAINNET = process.env.NEXT_PUBLIC_USE_MAINNET === 'true';
 export const CONTRACT_ADDRESS = USE_MAINNET ? '0x' : '0x583816E2F6DA673E97c248d8667F558C1c90Ea88';
 
+console.log({ USE_MAINNET, CONTRACT_ADDRESS })
+
 export const GameProvider = ({ children }) => {
     const [blocks, setBlocks] = useState<{ [id: string]: ClaimableBlock }>({});
     const { address } = useAccount();
@@ -75,13 +77,15 @@ export const GameProvider = ({ children }) => {
                     functionName: 'highScore'
                 });
                 setHighScore(fetchedHighScore);
-                const fetchedUserScore = await readContract({
-                    address: CONTRACT_ADDRESS,
-                    abi,
-                    functionName: 'claims',
-                    args: [address]
-                })
-                setUserScore(fetchedUserScore);
+                if (address) {
+                    const fetchedUserScore = await readContract({
+                        address: CONTRACT_ADDRESS,
+                        abi,
+                        functionName: 'claims',
+                        args: [address]
+                    })
+                    setUserScore(fetchedUserScore);
+                }
 
                 // Set the last claimed block to exit out of this async code and back into context-aware block territory
                 setLastClaimedBlock({ claimed: true, id: parseInt(blockNumber.toString()), claimerAddress: args.claimer, gasPriceGwei });
