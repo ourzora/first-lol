@@ -31,6 +31,7 @@
 .containerContent {
     padding: var(--container-y-padding) var(--container-x-padding);
     flex: 1;
+    overflow: scroll;
 }
 
 .containerFooter {
