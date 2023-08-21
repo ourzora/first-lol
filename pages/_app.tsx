@@ -2,10 +2,15 @@ import type { AppProps } from 'next/app'
 import { Inter } from 'next/font/google'
 import localFont from 'next/font/local'
 import "../styles/globals.css";
+import '@rainbow-me/rainbowkit/styles.css';
 import { GameProvider } from '../providers/GameProvider';
 import { WagmiConfig, configureChains, createConfig } from 'wagmi';
 import { zoraTestnet } from 'viem/chains';
 import { publicProvider } from 'wagmi/providers/public'
+import {
+  getDefaultWallets,
+  RainbowKitProvider,
+} from '@rainbow-me/rainbowkit';
 
 const inter = Inter({ variable: '--font-inter', subsets: ['latin'] })
 const arialMono = localFont({
@@ -15,13 +20,20 @@ const arialMono = localFont({
   ], variable: '--font-mono'
 })
 
-const { publicClient, webSocketPublicClient } = configureChains(
+const { chains, publicClient, webSocketPublicClient } = configureChains(
   [zoraTestnet],
   [publicProvider()],
 )
 
+const { connectors } = getDefaultWallets({
+  appName: 'first.lol',
+  projectId: process.env.NEXT_PUBLIC_WC_PROJECT_ID,
+  chains: chains.map(chain => ({ ...chain, fees: { ...chain.fees, defaultPriorityFee: parseInt(chain.fees?.defaultPriorityFee.toString()) } }))
+});
+
 const config = createConfig({
   autoConnect: true,
+  connectors,
   publicClient,
   webSocketPublicClient,
 })
@@ -37,9 +49,11 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         }
       `}</style>
       <WagmiConfig config={config}>
-        <GameProvider>
-          <Component {...pageProps} />
-        </GameProvider >
+        <RainbowKitProvider chains={chains}>
+          <GameProvider>
+            <Component {...pageProps} />
+          </GameProvider >
+        </RainbowKitProvider>
       </WagmiConfig>
     </>
   )
