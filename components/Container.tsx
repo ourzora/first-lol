@@ -77,8 +77,9 @@ export function Container({ children }) {
             <div style={{ marginTop: '1rem' }}>CLAIM A BLOCK FIRST, SCORE A POINT. CLAIM THE MOST BLOCKS, WIN ETH.</div>
             <div className={containerStyles.sponsorHeader}>POWERED BY</div>
             <div className={containerStyles.sponsorRow}>
-                <div><img className={containerStyles.sponsorImg} src="/img/zora.svg" alt="Zora Logo" /></div>
-                <div><img className={containerStyles.sponsorImg} src="/img/conduit.svg" alt="Conduit Logo" /></div>
+                <div><a href="https://www.flashbots.net/" target="_blank" rel="noreferrer noopener"><img className={containerStyles.sponsorImg} src="/img/flashbots.svg" alt="Flashbots Logo" /></a></div>
+                <div><a href="https://zora.co/" target="_blank" rel="noreferrer noopener"><img className={containerStyles.sponsorImg} src="/img/zora.svg" alt="Zora Logo" /></a></div>
+                <div><a href="https://conduit.xyz//" target="_blank" rel="noreferrer noopener"><img className={containerStyles.sponsorImg} src="/img/conduit.svg" alt="Conduit Logo" /></a></div>
             </div>
         </div >
     )

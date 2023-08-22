@@ -60,7 +60,7 @@
 
 .sponsorRow {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     height: 2.25rem;
     margin-top: 10px;
     width: 100%;
