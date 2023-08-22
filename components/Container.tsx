@@ -49,11 +49,11 @@ export function Container({ children }) {
     return (
         <div className={containerStyles.gutter}>
             <div className={containerStyles.header}>
-                FIRST <span style={{ fontSize: '12' }}>(LOL)</span>
+                <a href="/">FIRST <span style={{ fontSize: '12' }}>(LOL)</span></a>
             </div>
             <div className={containerStyles.container}>
                 <div className={containerStyles.containerHeader}>
-                    <div>High Score: {highScore.toString()} Blocks</div>
+                    <div>High Score: {highScore.toString()} Blocks (<a href="/leaderboard">view leaderboard</a>)</div>
                     <div>Your Score: {userScore.toString()} Blocks</div>
                 </div>
                 <div className={containerStyles.containerContent}>

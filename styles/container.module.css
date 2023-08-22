@@ -28,6 +28,11 @@
     flex-grow: 0;
 }
 
+.containerHeader>div>a {
+    color: var(--secondary-text-color);
+    text-decoration: underline;
+}
+
 .containerContent {
     padding: var(--container-y-padding) var(--container-x-padding);
     flex: 1;
