@@ -74,7 +74,7 @@ export function Container({ children }) {
                     )}
                 </Formik>
             </div>
-            <div style={{ marginTop: '1rem' }}>CLAIM A BLOCK FIRST, SCORE A POINT. CLAIM THE MOST BLOCKS, WIN 9.99 ETH.</div>
+            <div style={{ marginTop: '1rem' }}>CLAIM A BLOCK FIRST, SCORE A POINT. CLAIM THE MOST BLOCKS, WIN ETH.</div>
             <div className={containerStyles.sponsorHeader}>POWERED BY</div>
             <div className={containerStyles.sponsorRow}>
                 <div><img className={containerStyles.sponsorImg} src="/img/zora.svg" alt="Zora Logo" /></div>
