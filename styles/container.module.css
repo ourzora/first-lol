@@ -60,8 +60,8 @@
 
 .sponsorRow {
     display: flex;
-    justify-content: space-between;
-    height: 1.5rem;
+    justify-content: space-around;
+    height: 2.25rem;
     margin-top: 10px;
     width: 100%;
 }
