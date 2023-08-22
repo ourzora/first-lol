@@ -79,7 +79,7 @@ contract FirstTest is Test {
         assertEq(playerA.balance, 2 ether);
     }
 
-    function claimReward_revertGameNotOver() public {
+    function testclaimReward_revertGameNotOver() public {
         vm.prank(playerA);
         game.claimBlock();
 
@@ -88,7 +88,7 @@ contract FirstTest is Test {
         game.claimReward();
     }
 
-    function claimReward_revertNotHighScore() public {
+    function testclaimReward_revertNotHighScore() public {
         vm.prank(playerA);
         game.claimBlock();
 
@@ -96,5 +96,18 @@ contract FirstTest is Test {
         vm.prank(playerB);
         vm.expectRevert();
         game.claimReward();
+    }
+
+    function testReceive() public {
+        payable(address(game)).transfer(1 ether);
+
+        // 2 eth because we send 1 eth in constructor
+        assertEq(address(game).balance, 2 ether);
+    }
+
+    function testReceive_gameOver() public {
+        vm.warp(block.timestamp + game.gameOverDeadline());
+        vm.expectRevert();
+        payable(address(game)).transfer(1 ether);
     }
 }

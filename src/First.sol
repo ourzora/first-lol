@@ -37,6 +37,7 @@ contract First {
     }
 
     receive() external payable {
+        require(block.timestamp < gameOverDeadline, "Game over");
         emit FundsReceived(msg.sender, msg.value);
     }
 }
