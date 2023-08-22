@@ -1,7 +1,6 @@
 import { useEnsName } from "wagmi";
 import { Container } from "../components/Container"
-import { ClaimableBlock, useGameState } from "../providers/GameProvider"
-import containerStyles from "../styles/container.module.css"
+import { ClaimableBlock, USE_MAINNET, useGameState } from "../providers/GameProvider"
 
 export default function Home() {
     const { blocks } = useGameState();
@@ -23,7 +22,7 @@ function BlockLine({ block }: { block: ClaimableBlock }) {
     const { data: ensName } = useEnsName({ address: block.claimerAddress, chainId: 1 })
 
     if (!block.claimed) {
-        return <p><b>Block {block.id}</b> was unclaimed!</p>
+        return <p><a href={`https://${USE_MAINNET ? '' : 'testnet.'}explorer.zora.energy/block/${block.id}`} target="_blank" rel="noreferrer noopener"><b>Block {block.id}</b> was unclaimed!</a></p>
     }
     let formattedClaimer = block.claimerAddress as string;
     if (ensName) {
@@ -32,5 +31,5 @@ function BlockLine({ block }: { block: ClaimableBlock }) {
         formattedClaimer = formattedClaimer.slice(0, 6) + "..." + formattedClaimer.slice(-4);
     }
 
-    return <p><b>Block {block.id}</b> claimed by <b>{formattedClaimer}</b> with a gas price of <b>{parseFloat(block.gasPriceGwei).toFixed(2)} gwei</b></p>
+    return <p><a href={`https://${USE_MAINNET ? '' : 'testnet.'}explorer.zora.energy/tx/${block.txHash}`} target="_blank" rel="noreferrer noopener"><b>Block {block.id}</b> claimed by <b>{formattedClaimer}</b> with a gas price of <b>{parseFloat(block.gasPriceGwei).toFixed(2)} gwei</b></a></p>
 }

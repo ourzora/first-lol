@@ -21,3 +21,8 @@ body {
     font-weight: 500;
     line-height: normal;
 }
+
+a {
+    color: var(--text-color);
+    text-decoration: none;
+}

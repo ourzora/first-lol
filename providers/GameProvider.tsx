@@ -9,6 +9,7 @@ export interface ClaimableBlock {
     claimerAddress?: `0x${string}`;
     gasPriceGwei?: string;
     claimed: boolean;
+    txHash?: string;
     id: number;
 }
 
@@ -21,7 +22,7 @@ export interface GameState {
 const initialState = { blocks: {}, userScore: BigInt(0), highScore: BigInt(0) };
 export const GameContext = createContext<GameState>(initialState);
 
-const USE_MAINNET = process.env.NEXT_PUBLIC_USE_MAINNET === 'true';
+export const USE_MAINNET = process.env.NEXT_PUBLIC_USE_MAINNET === 'true';
 export const CONTRACT_ADDRESS = USE_MAINNET ? '0x' : '0x583816E2F6DA673E97c248d8667F558C1c90Ea88';
 export const CHAIN_ID = USE_MAINNET ? 7777777 : 999;
 
@@ -92,7 +93,7 @@ export const GameProvider = ({ children }) => {
                 }
 
                 // Set the last claimed block to exit out of this async code and back into context-aware block territory
-                setLastClaimedBlock({ claimed: true, id: parseInt(blockNumber.toString()), claimerAddress: args.claimer, gasPriceGwei });
+                setLastClaimedBlock({ claimed: true, id: parseInt(blockNumber.toString()), claimerAddress: args.claimer, gasPriceGwei, txHash: transactionHash });
             }))
         }
     });
