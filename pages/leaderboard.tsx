@@ -21,7 +21,7 @@ export default function Leaderboard({ leaders }) {
 
 export const getServerSideProps: GetServerSideProps<{
     leaders: Leader[]
-}> = async () => {
+}> = async ({ req, res }) => {
     const query = `{
         players(first:10, orderBy:score, orderDirection:desc) {
           id
@@ -37,6 +37,12 @@ export const getServerSideProps: GetServerSideProps<{
             query: query
         }),
     }).then(res => res.json()).then(res => res.data.players)
+
+    res.setHeader(
+        'Cache-Control',
+        'public, s-maxage=5, stale-while-revalidate=59'
+    )
+
     return { props: { leaders } }
 }
 
