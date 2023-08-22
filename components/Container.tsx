@@ -29,6 +29,8 @@ export function Container({ children }) {
         functionName: 'claimBlock',
         // @ts-ignore
         chainId: CHAIN_ID,
+        // @ts-ignore
+        gas: BigInt(80_000),
     })
 
     const handleSubmit = useCallback(async (values, { setSubmitting }) => {
