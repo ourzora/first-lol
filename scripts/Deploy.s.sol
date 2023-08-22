@@ -9,7 +9,7 @@ contract Deploy is Script {
         uint256 deployerPrivateKey = vm.envUint("DEPLOYER_PK");
         vm.startBroadcast(deployerPrivateKey);
 
-        First game = new First();
+        First game = new First{value: 9990000000000000000}();
         console.log("Deployed First to %s", address(game));
         vm.stopBroadcast();
     }

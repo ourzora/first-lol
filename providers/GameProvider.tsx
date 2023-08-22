@@ -23,7 +23,7 @@ const initialState = { blocks: {}, userScore: BigInt(0), highScore: BigInt(0) };
 export const GameContext = createContext<GameState>(initialState);
 
 export const USE_MAINNET = process.env.NEXT_PUBLIC_USE_MAINNET === 'true';
-export const CONTRACT_ADDRESS = USE_MAINNET ? '0x' : '0x583816E2F6DA673E97c248d8667F558C1c90Ea88';
+export const CONTRACT_ADDRESS = USE_MAINNET ? '0xfC2d34A2A545dbE210aD0D8CC0E0e943AAcFF621' : '0x583816E2F6DA673E97c248d8667F558C1c90Ea88';
 export const CHAIN_ID = USE_MAINNET ? 7777777 : 999;
 
 console.log({ USE_MAINNET, CONTRACT_ADDRESS })

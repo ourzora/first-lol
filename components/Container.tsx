@@ -5,7 +5,8 @@ import { Button } from "./Button"
 import { Input } from "./Input"
 import { useCallback } from "react"
 import { CONTRACT_ADDRESS, CHAIN_ID, useGameState } from "../providers/GameProvider";
-import { useAccount, useContractWrite } from "wagmi";
+import { useAccount, useContractWrite, useNetwork } from "wagmi";
+import { switchNetwork } from '@wagmi/core'
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import abi from "../utils/abi";
 
@@ -16,6 +17,7 @@ const FormSchema = Yup.object().shape({
 
 export function Container({ children }) {
     const { highScore, userScore } = useGameState();
+    const { chain } = useNetwork();
     const { openConnectModal } = useConnectModal();
     const { address } = useAccount();
     const { write } = useContractWrite({
@@ -30,12 +32,17 @@ export function Container({ children }) {
     })
 
     const handleSubmit = useCallback(async (values, { setSubmitting }) => {
+        if (chain.id !== CHAIN_ID) {
+            await switchNetwork({
+                chainId: CHAIN_ID,
+            })
+        }
         // @ts-ignore
         await write({
             gasPrice: values.gasPrice ? values.gasPrice * 1e9 : undefined
         })
         setSubmitting(false)
-    }, [])
+    }, [chain, write])
 
     return (
         <div className={containerStyles.gutter}>
