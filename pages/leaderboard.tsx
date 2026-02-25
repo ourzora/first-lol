@@ -57,7 +57,6 @@ export default function Leaderboard({ leaders }) {
 export const getServerSideProps: GetServerSideProps<{
     leaders: Leader[]
 }> = async ({ req, res }) => {
-    // TODO: Goldsky subgraph removed (deprecated), needs alternative data source
     const leaders: Leader[] = []
 
     res.setHeader(
