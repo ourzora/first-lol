@@ -57,21 +57,8 @@ export default function Leaderboard({ leaders }) {
 export const getServerSideProps: GetServerSideProps<{
     leaders: Leader[]
 }> = async ({ req, res }) => {
-    const query = `{
-        players(first:10, orderBy:score, orderDirection:desc) {
-          id
-          score
-        }
-      }`
-    const leaders = await fetch('https://api.goldsky.com/api/public/project_clhk16b61ay9t49vm6ntn4mkz/subgraphs/first-lol/1.0.1/gn', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            query: query
-        }),
-    }).then(res => res.json()).then(res => res.data.players)
+    // TODO: Goldsky subgraph removed (deprecated), needs alternative data source
+    const leaders: Leader[] = []
 
     res.setHeader(
         'Cache-Control',
