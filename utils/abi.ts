@@ -43,6 +43,25 @@ export default [
         "type": "event"
     },
     {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": true,
+                "internalType": "address",
+                "name": "claimer",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "newHighScore",
+                "type": "uint256"
+            }
+        ],
+        "name": "NewHighScore",
+        "type": "event"
+    },
+    {
         "inputs": [
             {
                 "internalType": "uint256",
